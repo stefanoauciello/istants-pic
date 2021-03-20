@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+    database:
+        image: mysql:5.7
+        restart: always
+        environment:
+            MYSQL_DATABASE: 'instant'
+            MYSQL_ROOT_PASSWORD: 'root'
+            MYSQL_USER: 'instant'
+            MYSQL_PASSWORD: 'instant'
+            TZ: Etc/UTC
+        command: mysqld --sql_mode=""
+        ports:
+            - '3306:3306'
+        expose:
+            - '3306'
+        volumes: 
+            - ./mysql-dump:/docker-entrypoint-initdb.d
