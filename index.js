@@ -42,6 +42,10 @@ app.post('/upload',
             });
         }
 
+        const dbConnection = await mysql.createConnection(config).promise();
+        await dbConnection.query('INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME) VALUES(?, ?, ?, ?, ?, ?)',
+            [req.body.NAME, req.body.WEIGHT, req.body.LENGTH, req.body.LATITUDE, req.body.LONGITUDE, req.body.USERNAME]);
+
         res.status(200).json({
             success: true,
             message: 'Success',
