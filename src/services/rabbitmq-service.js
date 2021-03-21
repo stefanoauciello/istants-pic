@@ -1,4 +1,4 @@
-const {resizePhoto} = require("./resizing-job");
+const {resizePhoto} = require("./resizing-service");
 const amqplib = require("amqplib");
 const amqp_url = 'amqp://localhost:5672';
 const exchange = 'instant_exchange';

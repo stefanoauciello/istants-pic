@@ -1,8 +1,8 @@
 const express = require('express');
 const CronJob = require('cron').CronJob;
 const bodyParser = require('body-parser');
-const { getPhotos, uploadPhoto } = require("./photo-service");
-const { doConsume } = require("./rabbitmq-service");
+const { getPhotos, uploadPhoto } = require("./services/photo-service");
+const { doConsume } = require("./services/rabbitmq-service");
 const {body, validationResult} = require('express-validator');
 const app = express();
 
