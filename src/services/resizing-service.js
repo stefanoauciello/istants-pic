@@ -12,7 +12,7 @@ async function resizePhoto(pk) {
     console.log("Starting process resize photo with id -> " + pk);
 
     const dbConnection = await mysql.createConnection(config).promise();
-    const [rows] = await dbConnection.execute('SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS WHERE ID = ' + pk);
+    const [rows] = await dbConnection.query('SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS WHERE ID = ' + pk);
     const photo = rows[0].PHOTO;
 
     const photo150 = await sharp(photo)
