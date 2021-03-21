@@ -1,13 +1,14 @@
+const {resizePhoto} = require("./resizing-job");
 const amqplib = require("amqplib");
 const amqp_url = 'amqp://localhost:5672';
+const exchange = 'instant_exchange';
+const queue = 'instant';
+const routeKey = 'instant_route';
 
 async function sendNotify(pk) {
     console.log("Publishing pk -> " + pk);
     const connection = await amqplib.connect(amqp_url, "heartbeat=60");
     const channel = await connection.createChannel()
-    const exchange = 'instant_exchange';
-    const queue = 'instant';
-    const routeKey = 'instant_route';
     await channel.assertExchange(exchange, 'direct', {durable: true}).catch(console.error);
     await channel.assertQueue(queue, {durable: true});
     await channel.bindQueue(queue, exchange, routeKey);
@@ -21,13 +22,13 @@ async function sendNotify(pk) {
 async function doConsume() {
     const connection = await amqplib.connect(amqp_url, "heartbeat=60");
     const channel = await connection.createChannel()
-    const queue = 'instant';
     await connection.createChannel();
     await channel.assertQueue(queue, {durable: true});
-    await channel.consume(queue, (msg) => {
+    await channel.consume(queue, async (msg) => {
         console.log("MESSAGE READED -> " + msg.content.toString());
-        channel.ack(msg);
-        channel.cancel('myconsumer');
+        await resizePhoto(msg.content.toString());
+        await channel.ack(msg);
+        await channel.cancel('myconsumer');
     }, {consumerTag: 'myconsumer'});
     setTimeout(() => {
         channel.close();
