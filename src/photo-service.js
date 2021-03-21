@@ -48,7 +48,7 @@ async function sendNotify() {
     const conn = await amqplib.connect(amqp_url, "heartbeat=60");
     const ch = await conn.createChannel()
     const exch = 'test_exchange';
-    const q = 'test_queue';
+    const q = 'instant';
     const rkey = 'test_route';
     const msg = 'Hello World!';
     await ch.assertExchange(exch, 'direct', {durable: true}).catch(console.error);
@@ -65,7 +65,7 @@ async function do_consume() {
     console.log("DoConsume");
     var conn = await amqplib.connect(amqp_url, "heartbeat=60");
     var ch = await conn.createChannel()
-    var q = 'test_queue';
+    var q = 'instant';
     await conn.createChannel();
     await ch.assertQueue(q, {durable: true});
     await ch.consume(q, function (msg) {
