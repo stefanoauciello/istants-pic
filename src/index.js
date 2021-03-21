@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const { getPhotos, uploadPhoto } = require("./services/photo-service");
-const { validate } = require("./validator");
+const {getPhotos, uploadPhoto} = require("./services/photo-service");
+const {validate} = require("./validator");
 const formidable = require('formidable');
 
 // START JOB
@@ -12,22 +12,42 @@ const app = express();
 const jsonParser = bodyParser.json()
 
 app.get('/photos', async (req, res) => {
-    return getPhotos(req, res)
+    try {
+        const [rows] = await getPhotos(req, res);
+        res.status(200).json({
+            rows: rows
+        })
+    } catch (e) {
+        res.status(400).json({
+            error: e
+        })
+    }
 })
 
 app.post('/upload',
     jsonParser,
     async (req, res) => {
-        const form = formidable({ multiples: true });
-        form.parse(req, (err, fields, files) => {
+        const form = formidable({multiples: true});
+        form.parse(req, async (err, fields, files) => {
             const valid = validate(fields, files);
-            if(!valid){
+            if (!valid) {
                 return res.status(400).json({
                     success: false,
                     errors: "fields or files not valid"
                 });
             } else {
-                return uploadPhoto(fields, files, res);
+                try {
+                    await uploadPhoto(fields, files, res);
+                    res.status(200).json({
+                        success: true,
+                        message: 'Success',
+                    })
+                } catch (e) {
+                    res.status(400).json({
+                        error: e
+                    })
+                }
+
             }
         });
     });
