@@ -25,9 +25,11 @@ async function sendNotify(pk) {
 
 
 async function doConsume() {
+    var connection = null;
+    var channel = null;
     try {
-        const connection = await amqplib.connect(amqp_url, "heartbeat=60");
-        const channel = await connection.createChannel()
+        connection = await amqplib.connect(amqp_url, "heartbeat=60");
+        channel = await connection.createChannel()
         await connection.createChannel();
         await channel.assertQueue(queue, {durable: true});
         await channel.consume(queue, async (msg) => {
@@ -36,12 +38,13 @@ async function doConsume() {
             await channel.ack(msg);
             await channel.cancel('myconsumer');
         }, {consumerTag: 'myconsumer'});
+    } catch (e) {
+        throw new Error(e);
+    } finally {
         setTimeout(() => {
             channel.close();
             connection.close();
         }, 500);
-    } catch (e) {
-        throw new Error(e);
     }
 }
 

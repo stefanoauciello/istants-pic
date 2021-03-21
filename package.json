@@ -17,6 +17,7 @@
     "express-validator": "^6.10.0",
     "formidable": "^1.2.2",
     "mysql2": "^2.2.5",
+    "sharp": "^0.27.2",
     "validator": "^13.5.2"
   },
   "devDependencies": {
