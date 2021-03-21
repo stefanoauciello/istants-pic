@@ -11,7 +11,7 @@ const config = {
 async function getPhotos(req, res) {
     try {
         const dbConnection = await mysql.createConnection(config).promise();
-        const [rows] = await dbConnection.execute('SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, UPDATED_AT, CREATED_AT FROM instant.PHOTOS;');
+        const [rows] = await dbConnection.execute('SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, UPDATED_AT, CREATED_AT FROM instant.PHOTOS ORDER BY CREATED_AT DESC;');
         res.status(200).json({
             rows: rows
         })
@@ -26,9 +26,10 @@ async function getPhotos(req, res) {
 async function uploadPhoto(req, res) {
     try {
         const dbConnection = await mysql.createConnection(config).promise();
-        await dbConnection.query('INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME) VALUES(?, ?, ?, ?, ?, ?)',
+        const record = await dbConnection.query('INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME) VALUES(?, ?, ?, ?, ?, ?)',
             [req.body.NAME, req.body.WEIGHT, req.body.LENGTH, req.body.LATITUDE, req.body.LONGITUDE, req.body.USERNAME]);
-        await sendNotify()
+        const pk = record[0].insertId;
+        await sendNotify(pk)
         res.status(200).json({
             success: true,
             message: 'Success',

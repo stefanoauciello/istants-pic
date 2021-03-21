@@ -32,7 +32,6 @@ app.post('/upload',
     });
 
 const job = new CronJob("*/1 * * * * *", async () => {
-    console.log("running a task every 1 second");
     await doConsume();
 });
 job.start();
