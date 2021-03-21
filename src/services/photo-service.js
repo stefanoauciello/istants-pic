@@ -9,12 +9,18 @@ const config = {
     password: "instant"
 };
 
-async function getPhotos() {
+async function getPhotos(resized) {
     const dbConnection = await mysql.createConnection(config).promise();
-    return dbConnection.query('SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS ORDER BY CREATED_AT DESC;');
+    var query;
+    if (resized) {
+        query = 'SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS WHERE RESIZED = TRUE ORDER BY CREATED_AT DESC;'
+    } else {
+        query = 'SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS ORDER BY CREATED_AT DESC;'
+    }
+    return dbConnection.query(query);
 }
 
-async function uploadPhoto(fields, files, res) {
+async function uploadPhoto(fields, files) {
     const rawData = fs.readFileSync(files.IMAGE.path)
     const dbConnection = await mysql.createConnection(config).promise();
     const record = await dbConnection.query('INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO) VALUES(?, ?, ?, ?, ?, ?, ?)',

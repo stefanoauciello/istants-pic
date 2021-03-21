@@ -13,7 +13,21 @@ const jsonParser = bodyParser.json()
 
 app.get('/photos', async (req, res) => {
     try {
-        const [rows] = await getPhotos();
+        const [rows] = await getPhotos(false);
+        res.status(200).json({
+            rows: rows
+        })
+    } catch (e) {
+        res.status(400).json({
+            error: e
+        })
+    }
+})
+
+
+app.get('/resized-photos', async (req, res) => {
+    try {
+        const [rows] = await getPhotos(true);
         res.status(200).json({
             rows: rows
         })
@@ -37,7 +51,7 @@ app.post('/upload',
                 });
             } else {
                 try {
-                    await uploadPhoto(fields, files, res);
+                    await uploadPhoto(fields, files);
                     res.status(200).json({
                         success: true,
                         message: 'Success',
