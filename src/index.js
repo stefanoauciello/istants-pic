@@ -1,7 +1,8 @@
 const express = require('express');
-var CronJob = require('cron').CronJob;
+const CronJob = require('cron').CronJob;
 const bodyParser = require('body-parser');
-const { getPhotos, uploadPhoto, do_consume } = require("./photo-service");
+const { getPhotos, uploadPhoto } = require("./photo-service");
+const { doConsume } = require("./rabbitmq-service");
 const {body, validationResult} = require('express-validator');
 const app = express();
 
@@ -30,13 +31,13 @@ app.post('/upload',
         return uploadPhoto(req, res);
     });
 
-const job = new CronJob("*/1 * * * * *", function() {
+const job = new CronJob("*/1 * * * * *", async () => {
     console.log("running a task every 1 second");
-    do_consume();
+    await doConsume();
 });
 job.start();
 
 app.listen(3000);
-console.log("listening at 3000");
+console.log("Server on port -> 3000");
 
 module.exports = app;
