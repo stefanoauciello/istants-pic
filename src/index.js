@@ -1,6 +1,7 @@
 const express = require('express');
+var CronJob = require('cron').CronJob;
 const bodyParser = require('body-parser');
-const { getPhotos, uploadPhoto } = require("./photo-service");
+const { getPhotos, uploadPhoto, do_consume } = require("./photo-service");
 const {body, validationResult} = require('express-validator');
 const app = express();
 
@@ -29,7 +30,13 @@ app.post('/upload',
         return uploadPhoto(req, res);
     });
 
-app.listen(3000)
-console.log("listening at 3000")
+const job = new CronJob("*/1 * * * * *", function() {
+    console.log("running a task every 1 second");
+    do_consume();
+});
+job.start();
+
+app.listen(3000);
+console.log("listening at 3000");
 
 module.exports = app;
