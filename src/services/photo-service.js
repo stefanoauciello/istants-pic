@@ -9,7 +9,7 @@ const config = {
     password: "instant"
 };
 
-async function getPhotos(req, res) {
+async function getPhotos() {
     const dbConnection = await mysql.createConnection(config).promise();
     return dbConnection.query('SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS ORDER BY CREATED_AT DESC;');
 }

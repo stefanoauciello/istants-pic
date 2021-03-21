@@ -13,7 +13,7 @@ const jsonParser = bodyParser.json()
 
 app.get('/photos', async (req, res) => {
     try {
-        const [rows] = await getPhotos(req, res);
+        const [rows] = await getPhotos();
         res.status(200).json({
             rows: rows
         })
