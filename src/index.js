@@ -1,10 +1,12 @@
 const express = require('express');
-const CronJob = require('cron').CronJob;
 const bodyParser = require('body-parser');
 const { getPhotos, uploadPhoto } = require("./services/photo-service");
-const { doConsume } = require("./services/rabbitmq-service");
 const { validate } = require("./validator");
 const formidable = require('formidable');
+
+// START JOB
+require("./job");
+
 const app = express();
 
 const jsonParser = bodyParser.json()
@@ -29,11 +31,6 @@ app.post('/upload',
             }
         });
     });
-
-const job = new CronJob("*/1 * * * * *", async () => {
-    await doConsume();
-});
-job.start();
 
 app.listen(3000);
 console.log("Server on port -> 3000");

@@ -9,7 +9,7 @@ const config = {
 };
 
 async function resizePhoto(pk) {
-    console.log("starting process resizing photo with id " + pk);
+    console.log("Starting process resize photo with id -> " + pk);
 
     const dbConnection = await mysql.createConnection(config).promise();
     const [rows] = await dbConnection.execute('SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS WHERE ID = ' + pk);
