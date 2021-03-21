@@ -15,7 +15,9 @@
     "cron": "^1.8.2",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
-    "mysql2": "^2.2.5"
+    "formidable": "^1.2.2",
+    "mysql2": "^2.2.5",
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "eslint": "^7.22.0",

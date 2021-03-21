@@ -3,7 +3,8 @@ const CronJob = require('cron').CronJob;
 const bodyParser = require('body-parser');
 const { getPhotos, uploadPhoto } = require("./services/photo-service");
 const { doConsume } = require("./services/rabbitmq-service");
-const {body, validationResult} = require('express-validator');
+const { validate } = require("./validator");
+const formidable = require('formidable');
 const app = express();
 
 const jsonParser = bodyParser.json()
@@ -14,21 +15,19 @@ app.get('/photos', async (req, res) => {
 
 app.post('/upload',
     jsonParser,
-    body("NAME").notEmpty().isString(),
-    body("WEIGHT").notEmpty().isNumeric(),
-    body("LENGTH").notEmpty().isNumeric(),
-    body("LATITUDE").notEmpty().isString(),
-    body("LONGITUDE").notEmpty().isString(),
-    body("USERNAME").notEmpty().isString(),
     async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({
-                success: false,
-                errors: errors.array()
-            });
-        }
-        return uploadPhoto(req, res);
+        const form = formidable({ multiples: true });
+        form.parse(req, (err, fields, files) => {
+            const valid = validate(fields, files);
+            if(!valid){
+                return res.status(400).json({
+                    success: false,
+                    errors: "fields or files not valid"
+                });
+            } else {
+                return uploadPhoto(fields, files, res);
+            }
+        });
     });
 
 const job = new CronJob("*/1 * * * * *", async () => {

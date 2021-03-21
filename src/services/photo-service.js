@@ -1,4 +1,5 @@
 const mysql = require('mysql2');
+const fs = require('fs');
 const {sendNotify} = require("./rabbitmq-service");
 
 const config = {
@@ -11,7 +12,7 @@ const config = {
 async function getPhotos(req, res) {
     try {
         const dbConnection = await mysql.createConnection(config).promise();
-        const [rows] = await dbConnection.execute('SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, UPDATED_AT, CREATED_AT FROM instant.PHOTOS ORDER BY CREATED_AT DESC;');
+        const [rows] = await dbConnection.execute('SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS ORDER BY CREATED_AT DESC;');
         res.status(200).json({
             rows: rows
         })
@@ -23,11 +24,12 @@ async function getPhotos(req, res) {
     return res;
 }
 
-async function uploadPhoto(req, res) {
+async function uploadPhoto(fields, files, res) {
     try {
+        const rawData = fs.readFileSync(files.IMAGE.path)
         const dbConnection = await mysql.createConnection(config).promise();
-        const record = await dbConnection.query('INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME) VALUES(?, ?, ?, ?, ?, ?)',
-            [req.body.NAME, req.body.WEIGHT, req.body.LENGTH, req.body.LATITUDE, req.body.LONGITUDE, req.body.USERNAME]);
+        const record = await dbConnection.query('INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO) VALUES(?, ?, ?, ?, ?, ?, ?)',
+            [fields.NAME, fields.WEIGHT, fields.LENGTH, fields.LATITUDE, fields.LONGITUDE, fields.USERNAME, rawData]);
         const pk = record[0].insertId;
         await sendNotify(pk)
         res.status(200).json({
