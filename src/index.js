@@ -22,6 +22,7 @@ app.get('/photos', async (req, res) => {
       error: e,
     });
   }
+  return res;
 });
 
 app.get('/resized-photos', async (req, res) => {
@@ -35,6 +36,7 @@ app.get('/resized-photos', async (req, res) => {
       error: e,
     });
   }
+  return res;
 });
 
 app.post('/upload',
@@ -44,7 +46,7 @@ app.post('/upload',
     form.parse(req, async (err, fields, files) => {
       const valid = validate(fields, files);
       if (!valid) {
-        return res.status(400).json({
+        res.status(400).json({
           success: false,
           errors: 'fields or files not valid',
         });
@@ -60,6 +62,7 @@ app.post('/upload',
           error: e,
         });
       }
+      return res;
     });
   });
 
