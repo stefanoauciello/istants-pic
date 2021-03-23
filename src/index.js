@@ -8,7 +8,6 @@ const { validate } = require('./validator');
 require('./job');
 
 const app = express();
-
 const jsonParser = bodyParser.json();
 
 app.get('/photos', async (req, res) => {
@@ -68,5 +67,4 @@ app.post('/upload',
 
 app.listen(3000);
 console.log('Server on port -> 3000');
-
 module.exports = app;

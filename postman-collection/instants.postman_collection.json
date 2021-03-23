@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "52a93350-e442-49ae-9345-800ad6e2b726",
+		"name": "instants",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/photos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/photos",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"photos"
+					]
+				},
+				"description": "localhost:3000/photos"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/resized-photos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/resized-photos",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"resized-photos"
+					]
+				},
+				"description": "localhost:3000/photos"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/upload-photo-file 300",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "IMAGE",
+							"type": "file",
+							"src": "/C:/Users/HP/Desktop/300x300.jpg"
+						},
+						{
+							"key": "NAME",
+							"value": "prova555",
+							"type": "text"
+						},
+						{
+							"key": "WEIGHT",
+							"value": "10.5",
+							"type": "text"
+						},
+						{
+							"key": "LENGTH",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "LATITUDE",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "LONGITUDE",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "USERNAME",
+							"value": "USER2",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/upload",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/upload-photo-file 1024",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "IMAGE",
+							"type": "file",
+							"src": "/C:/Users/HP/Desktop/1024x1024.jpg"
+						},
+						{
+							"key": "NAME",
+							"value": "prova555",
+							"type": "text"
+						},
+						{
+							"key": "WEIGHT",
+							"value": "10.5",
+							"type": "text"
+						},
+						{
+							"key": "LENGTH",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "LATITUDE",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "LONGITUDE",
+							"value": "15",
+							"type": "text"
+						},
+						{
+							"key": "USERNAME",
+							"value": "USER2",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/upload",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"upload"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

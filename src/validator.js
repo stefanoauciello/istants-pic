@@ -1,29 +1,30 @@
 const validator = require('validator');
 
+// validate input from post
 function validate(fields, files) {
   let isValid = true;
 
-  if (validator.isEmpty(fields.NAME)) {
+  if (fields.NAME === null || validator.isEmpty(fields.NAME)) {
     isValid = false;
   }
 
-  if (validator.isEmpty(fields.WEIGHT) || !validator.isNumeric(fields.WEIGHT)) {
+  if (fields.WEIGHT === null || validator.isEmpty(fields.WEIGHT) || !validator.isNumeric(fields.WEIGHT)) {
     isValid = false;
   }
 
-  if (validator.isEmpty(fields.LENGTH) || !validator.isNumeric(fields.LENGTH)) {
+  if (fields.LENGTH === null || validator.isEmpty(fields.LENGTH) || !validator.isNumeric(fields.LENGTH)) {
     isValid = false;
   }
 
-  if (validator.isEmpty(fields.LATITUDE)) {
+  if (fields.LATITUDE === null || validator.isEmpty(fields.LATITUDE)) {
     isValid = false;
   }
 
-  if (validator.isEmpty(fields.LONGITUDE)) {
+  if (fields.LONGITUDE === null || validator.isEmpty(fields.LONGITUDE)) {
     isValid = false;
   }
 
-  if (validator.isEmpty(fields.USERNAME)) {
+  if (fields.USERNAME === null || validator.isEmpty(fields.USERNAME)) {
     isValid = false;
   }
 
