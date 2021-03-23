@@ -13,3 +13,6 @@ Installation Required:
 2) "yarn install" in cloned folder
 3) "yarn test" in cloned folder to run application tests
 4) "yarn start" in cloned folder to start application
+
+In "postman-collection" folder can you find the collection of API-REST call that can you use with the backend.
+Obviously in POST call you should change the file location.
