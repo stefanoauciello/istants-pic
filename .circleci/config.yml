@@ -10,6 +10,7 @@ jobs:
       - node/install:
           install-yarn: true
       - run: node --version
+      - run: yarn test
 workflows:
   test-app-istants-pic:
     jobs:
