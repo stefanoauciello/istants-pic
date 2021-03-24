@@ -1,6 +1,6 @@
 version: '2.1'
 orbs:
-  node: circleci/node@3.0.0
+  node: circleci/node@4.2.0
 jobs:
   install-node-example:
     docker:
@@ -13,4 +13,4 @@ jobs:
 workflows:
   test_my_app:
     jobs:
-      - install-node-example
+      - install-node
