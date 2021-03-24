@@ -2,7 +2,7 @@ version: '2.1'
 orbs:
   node: circleci/node@4.2.0
 jobs:
-  install-node:
+  test-app:
     docker:
       - image: 'cimg/base:stable'
     steps:
@@ -16,4 +16,4 @@ jobs:
 workflows:
   test-app-istants-pic:
     jobs:
-      - install-node
+      - test-app
