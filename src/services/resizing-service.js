@@ -23,7 +23,9 @@ async function resizePhoto(pk) {
     .resize(150, 150)
     .toBuffer();
 
-  return dbConnection.query(insertStatement, [rows[0].NAME, 150, 150, rows[0].LATITUDE, rows[0].LONGITUDE, rows[0].USERNAME, photo150, true]);
+  await dbConnection.query(insertStatement, [rows[0].NAME, 150, 150, rows[0].LATITUDE, rows[0].LONGITUDE, rows[0].USERNAME, photo150, true]);
+  console.log(`Ended process resize photo with id -> ${pk}`);
+  return true;
 }
 
 module.exports = { resizePhoto };

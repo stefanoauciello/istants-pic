@@ -9,7 +9,7 @@
     "stop": "yarn docker-down",
     "lint": "eslint",
     "test": "yarn docker-up && yarn wait-on -d 30000 tcp:3306 && yarn test:package && yarn docker-down",
-    "test:package": "jest --forceExit",
+    "test:package": "jest --runInBand --forceExit",
     "docker-up": "docker-compose up -d",
     "docker-down": "docker-compose down"
   },

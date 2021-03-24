@@ -49,20 +49,21 @@ app.post('/upload',
           success: false,
           errors: 'fields or files not valid',
         });
+      } else {
+        try {
+          await uploadPhoto(fields, files);
+          res.status(200).json({
+            success: true,
+            message: 'Success',
+          });
+        } catch (e) {
+          res.status(400).json({
+            error: e,
+          });
+        }
       }
-      try {
-        await uploadPhoto(fields, files);
-        res.status(200).json({
-          success: true,
-          message: 'Success',
-        });
-      } catch (e) {
-        res.status(400).json({
-          error: e,
-        });
-      }
-      return res;
     });
+    return res;
   });
 
 app.listen(3000);
