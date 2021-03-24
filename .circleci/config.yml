@@ -11,7 +11,6 @@ jobs:
           version: 19.03.13
       - node/install:
           install-yarn: true
-      - run: sudo apt-get -y install mysql-client
       - run: yarn install
       - run: yarn test
 workflows:
