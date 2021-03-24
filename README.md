@@ -1,6 +1,7 @@
 # Istants-pic
 
-NodeJS backend with dockerized solution.
+NodeJS backend with dockerized solution. <br>
+The principal goal of this backend is to resize uploaded photos. <br>
 You just need to clone it, install dependencies and execute with "yarn start" command.
 
 Installation Required:
