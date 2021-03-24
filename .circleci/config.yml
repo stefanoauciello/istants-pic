@@ -11,6 +11,6 @@ jobs:
           install-yarn: true
       - run: node --version
 workflows:
-  test_my_app:
+  test-app-istants-pic:
     jobs:
       - install-node
