@@ -18,3 +18,5 @@ Installation Required:
 
 In "postman-collection" folder you may find the collection of API-REST calls that you may use with the backend. 
 Obviously you should change the file location in POST call.
+
+[![CircleCI](https://circleci.com/gh/circleci/circleci-docs.svg?style=svg)](https://circleci.com/gh/circleci/circleci-docs)
