@@ -3,8 +3,6 @@ orbs:
   node: circleci/node@4.2.0
 jobs:
   test-app:
-    machine:
-      image: ubuntu-2004:202010-01
     steps:
       - checkout
       - setup_remote_docker:
@@ -13,6 +11,9 @@ jobs:
           install-yarn: true
       - run: yarn install
       - run: yarn test
+    executor:
+    machine:
+      image: ubuntu-2004:202010-01
 workflows:
   test-app-istants-pic:
     jobs:
