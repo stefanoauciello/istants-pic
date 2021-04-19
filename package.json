@@ -8,8 +8,7 @@
     "start": "yarn docker-up && yarn wait-on -d 30000 tcp:3306 && node src/index.js",
     "stop": "yarn docker-down",
     "lint": "eslint",
-    "delay": "node ./node_modules/npm-delay 45000",
-    "test": "yarn docker-up && yarn delay && yarn test:package && yarn docker-down",
+    "test": "yarn docker-up && yarn wait-on -d 30000 tcp:3306 && yarn test:package && yarn docker-down",
     "test:package": "jest --runInBand --forceExit",
     "docker-up": "docker-compose up -d",
     "docker-down": "docker-compose down"
@@ -23,8 +22,7 @@
     "formidable": "^1.2.2",
     "mysql2": "^2.2.5",
     "sharp": "^0.27.2",
-    "validator": "^13.5.2",
-    "npm-delay": "^1.0.4"
+    "validator": "^13.5.2"
   },
   "devDependencies": {
     "eslint": "^7.22.0",
