@@ -9,11 +9,4 @@ const config = {
 
 const dbConnection = mysql.createConnection(config).promise();
 
-async function executeQuery(query, params) {
-  if (params) {
-    return dbConnection.query(query, params);
-  }
-  return dbConnection.query(query);
-}
-
-module.exports = { executeQuery };
+module.exports = { dbConnection };
