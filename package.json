@@ -22,7 +22,8 @@
     "formidable": "^1.2.2",
     "mysql2": "^2.2.5",
     "sharp": "^0.27.2",
-    "validator": "^13.5.2"
+    "validator": "^13.5.2",
+    "log4js": "^6.3.0"
   },
   "devDependencies": {
     "eslint": "^7.22.0",

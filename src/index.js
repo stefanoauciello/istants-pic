@@ -1,8 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const formidable = require('formidable');
+
 const { getPhotos, uploadPhoto } = require('./services/photo-service');
 const { validate } = require('./validator');
+const { logger } = require('./utils/logger');
 
 // START JOB
 require('./job');
@@ -67,5 +69,5 @@ app.post('/upload',
   });
 
 app.listen(3000);
-console.log('Server on port -> 3000');
+logger.info('Server on port -> 3000');
 module.exports = app;

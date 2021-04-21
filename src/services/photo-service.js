@@ -1,10 +1,7 @@
 const fs = require('fs');
 const { sendNotify } = require('./rabbitmq-service');
 const { dbConnection } = require('./database-service');
-
-const queryAllPhoto = 'SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS ORDER BY CREATED_AT DESC;';
-const queryResizedPhoto = 'SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS WHERE RESIZED = TRUE ORDER BY CREATED_AT DESC;';
-const insertStatement = 'INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO) VALUES(?, ?, ?, ?, ?, ?, ?)';
+const { queryResizedPhoto, queryAllPhoto, insertStatement } = require('../utils/query');
 
 // get resized or all photos from database
 async function getPhotos(resized) {

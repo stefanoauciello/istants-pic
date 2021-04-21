@@ -1,6 +1,7 @@
 const amqplib = require('amqplib');
 const { resizePhoto } = require('./resizing-service');
 const { areWeTestingWithJest } = require('../utils/utils');
+const { logger } = require('../utils/logger');
 
 const amqpUrl = 'amqp://localhost:5672';
 const exchange = 'instant_exchange';
@@ -8,7 +9,7 @@ const queue = 'instant';
 const routeKey = 'instant_route';
 
 async function sendNotify(pk) {
-  console.log(`Publishing pk -> ${pk}`);
+  logger.info(`Publishing pk -> ${pk}`);
   if (!areWeTestingWithJest()) {
     const connection = await amqplib.connect(amqpUrl, 'heartbeat=60');
     const channel = await connection.createChannel();
@@ -28,7 +29,7 @@ async function doConsume() {
     await connection.createChannel();
     await channel.assertQueue(queue, { durable: true });
     await channel.consume(queue, async (msg) => {
-      console.log(`Message readed -> ${msg.content.toString()}`);
+      logger.info(`Message readed -> ${msg.content.toString()}`);
       await resizePhoto(msg.content.toString());
       await channel.ack(msg);
       await channel.close();

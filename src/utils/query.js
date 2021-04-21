@@ -1,0 +1,9 @@
+const queryAllPhoto = 'SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS ORDER BY CREATED_AT DESC;';
+const queryResizedPhoto = 'SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS WHERE RESIZED = TRUE ORDER BY CREATED_AT DESC;';
+const insertStatement = 'INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO) VALUES(?, ?, ?, ?, ?, ?, ?)';
+const selectFromPk = 'SELECT ID, NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, UPDATED_AT, CREATED_AT FROM instant.PHOTOS WHERE ID =';
+const insertStatementWithResize = 'INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, RESIZED) VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
+
+module.exports = {
+  queryAllPhoto, queryResizedPhoto, insertStatement, selectFromPk, insertStatementWithResize,
+};
