@@ -1,27 +1,20 @@
-const mysql = require('mysql2');
 const fs = require('fs');
 const path = require('path');
 const { resizePhoto } = require('../../src/services/resizing-service');
 const { getPhotos } = require('../../src/services/photo-service');
+const { dbConnection } = require('../../src/services/database-service');
 
-const config = {
-  host: '127.0.0.1',
-  port: 3306,
-  user: 'instant',
-  password: 'instant',
-};
+const insert1 = 'INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, CREATED_AT) VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
+const truncate = 'TRUNCATE TABLE instant.PHOTOS;';
 
 describe('Resizing Service', () => {
   beforeAll(async () => {
     const rawData = fs.readFileSync(path.resolve(__dirname, '../assets/image.jpg'));
-    const dbConnection = await mysql.createConnection(config).promise();
-    await dbConnection.query('INSERT INTO instant.PHOTOS (NAME, WEIGHT, LENGTH, LATITUDE, LONGITUDE, USERNAME, PHOTO, CREATED_AT) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
-      ['NAME', 'WEIGHT', 'LENGTH', 'LATITUDE', 'LONGITUDE', 'USERNAME', rawData, '2021-03-22 11:41:19']);
+    await dbConnection.query(insert1, ['NAME', 'WEIGHT', 'LENGTH', 'LATITUDE', 'LONGITUDE', 'USERNAME', rawData, '2021-03-22 11:41:19']);
   });
 
   afterAll(async () => {
-    const dbConnection = await mysql.createConnection(config).promise();
-    await dbConnection.query('TRUNCATE TABLE instant.PHOTOS;');
+    await dbConnection.query(truncate);
   });
 
   it('should return resized obj', async () => {
